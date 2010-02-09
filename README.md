@@ -35,7 +35,7 @@ SYNOPSIS
 
     // Errback fired if there was an error
     db.fetch('deities', 'yog-sothoth')
-    .addCallback(function (data, statusCode) {
+    .addErrback(function (data, statusCode) {
       if (statusCode == 404 ) { ... }
     }
 
