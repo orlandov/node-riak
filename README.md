@@ -12,8 +12,8 @@ SYNOPSIS
       port: 8098,
     });
 
-    // store nyarlathotep in deities as plain text
-    db.store('deities', 'nyarlathotep', "The crawling chaos")
+    // store nyarlathotep in deities as plain text with an 'r' value of 1
+    db.store('deities', 'nyarlathotep', "The crawling chaos", { r: 1 })
     .addCallback(function (resp, statusCode) {
       // ...
     });
@@ -58,6 +58,12 @@ If the HTTP response code isn't in the 2XX range an errback will be fired
 instead of a promise. It will have the same arguments as described in the
 success case above.
 
+TESTS
+-----
+
+By default the node-riak tests run on localhost:8098 on the `node-riak-test-pots`
+
+    NODE_LIB=lib node tests/test_riak.js
 
 SEE ALSO
 --------

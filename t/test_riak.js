@@ -12,17 +12,18 @@ var db = new Riak.Client({
   port: 8098,
 });
 
-var plan = 6;
+var plan = 7;
 var tc = 0;
 
 var str = "Ya'll are brutalizing me" + Math.random();
 var mahbucket = 'node-riak-test-posts';
 
-db.store(mahbucket, 'post0', str).addCallback(function (resp) {
+// store `post0` into mahbucket with r: 2, w: 1
+db.store(mahbucket, 'post0', str, { r: 2, w: 1 }).addCallback(function (resp) {
   tc++;
   equal(typeof resp.headers, 'object');
 
-  db.fetch(mahbucket, 'post0').addCallback(function (resp) {
+  db.fetch(mahbucket, 'post0', {}, { r: 2 }).addCallback(function (resp) {
     ok("x-riak-vclock" in resp.headers);
     tc++;
     equal(str, resp.data);
