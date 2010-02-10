@@ -1,7 +1,7 @@
 NAME
 ----
 
-node-riak - an asynchronous library for Riak
+node-riak - an client library for Riak
 
 SYNOPSIS
 --------
