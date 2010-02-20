@@ -6,6 +6,9 @@ node-riak - an client library for Riak
 SYNOPSIS
 --------
 
+Low Level Interface
+-------------------
+
     // intialize client
     var db = new Riak.Client({
       host: 'localhost',
@@ -39,6 +42,57 @@ SYNOPSIS
     .addErrback(function (data, statusCode) {
       if (statusCode == 404 ) { ... }
     }
+
+MapReduce
+---------
+
+    // intialize client
+    var db = new Riak.Client({
+      host: 'localhost',
+      port: 8098,
+    });
+
+    db.mapReduce(
+        [ ['bucket0', 'key0'],        // buckets/keys to use
+          ['bucket0', 'key1'] ],
+
+        [ Riak.link("..."),
+          Riak.map("function () {}"), // phases
+          Riak.map("function () {}"),
+          Riak.reduce("function () {}") ]
+    ).addCallback(function () {
+    
+    });
+
+High Level Interface
+--------------------
+
+    // intialize client
+    var db = new Riak.Client({
+      host: 'localhost',
+      port: 8098,
+    });
+
+    var bucket = db.bucket('posts');
+
+    bucket.get('post-fail').addErrback(function (error) {
+      // doesn't exist or something
+    });
+
+    bucket.get('post0', { r: 2 }).addCallback(function(object) {
+      debug(object.data.title);
+
+      object.links.push(['mybucket', 'mykey', 'mytag']);
+
+      if (!object.data.views)
+        object.data.views = 1;
+      else
+        object.data.views++;
+
+      object.store({ w: 2 }).addCallback(function () {
+        debug('object saved!');
+      });
+    });
 
 
 DESCRIPTION
