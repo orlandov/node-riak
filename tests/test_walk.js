@@ -56,11 +56,11 @@ function parseMessage(resp) {
   var body = message.body;
   process.nextTick(function s () {
     if (body) {
-      message.emit("body", body.substr(0, chunkSize));
+      message.emit("data", body.substr(0, chunkSize));
       body = body.substr(chunkSize);
       process.nextTick(s);
     } else {
-      message.emit("complete");
+      message.emit("end");
     }
   });
 }

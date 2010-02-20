@@ -12,8 +12,9 @@ SYNOPSIS
       port: 8098,
     });
 
-    // store nyarlathotep in deities as plain text with an 'r' value of 1
-    db.store('deities', 'nyarlathotep', "The crawling chaos", { r: 1 })
+    // store nyarlathotep in deities as plain text with an 'r' value of 1, and
+    // return the content again (content is not returned by default)
+    db.store('deities', 'nyarlathotep', "The crawling chaos", { returnbody: 1, r: 1 })
     .addCallback(function (resp, statusCode) {
       // ...
     });
