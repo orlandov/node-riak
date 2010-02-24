@@ -56,16 +56,16 @@ MapReduce
         [ ['bucket0', 'key0'],        // buckets/keys to use
           ['bucket0', 'key1'] ],
 
-        [ Riak.link("..."),
-          Riak.map("function () {}"), // phases
+        [ Riak.map("function () {}"), // phases
           Riak.map("function () {}"),
+          // reduce and link phases are not yet inplemented
           Riak.reduce("function () {}") ]
-    ).addCallback(function () {
-    
+    ).addCallback(function (resp) {
+      ...
     });
 
-High Level Interface
---------------------
+High Level Interface (not yet implemented)
+------------------------------------------
 
     // intialize client
     var db = new Riak.Client({
@@ -119,6 +119,16 @@ TESTS
 By default the node-riak tests run on localhost:8098 on the `node-riak-test-pots`
 
     NODE_LIB=lib node tests/test_riak.js
+
+TODO
+----
+
+Lots.
+
+- MapReduce reduce phases
+- MapReduce link phases
+- move high level error handling stuff into a higher level API and let the low
+  level api only wrap Node's HTTP facilities.
 
 SEE ALSO
 --------
